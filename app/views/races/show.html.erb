@@ -1,0 +1,16 @@
+<h1>Race #<%= @race.id %></h1>
+
+<p>Status: <%= @race.status %></p>
+
+<p>Type the following passage:</p>
+
+<p><%= @race.passage %></p>
+
+
+<div
+    data-controller="race"
+    data-passage="<%= @race.passage %>"
+    data-race-id="<%= @race.id %>">
+</div>
+
+<%= link_to "Back to lobby", root_path %>
