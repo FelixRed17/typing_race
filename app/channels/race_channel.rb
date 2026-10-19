@@ -1,12 +1,30 @@
 class RaceChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "race_demo"
+    @race_id = params[:race_id]
+
+    reject unless @race_id.present?
+
+    stream_from "race_#{@race_id}"
   end
 
   def speak(data)
+    return unless @race_id
+
     ActionCable.server.broadcast(
-      "race_demo",
+      "race_#{@race_id}",
       { message: data["message"] }
+    )
+  end
+
+  def update_progress(data)
+    return unless @race_id
+
+    ActionCable.server.broadcast(
+      "race_#{@race_id}",
+      {
+        player_id: data["player_id"],
+        progress: data["progress"]
+      }
     )
   end
 

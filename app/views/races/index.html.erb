@@ -1,6 +1,19 @@
-<p>Type: <%= @passage %></p>
+<h2>Available Races</h2>
 
-<div 
-    data-controller="race" 
-    data-passage="<%= @passage %>"
-></div>
+<%= button_to "Create Race", races_path, method: :post %>
+
+<% if @races.any? %>
+    <% @races.each do |race| %>
+        <div>
+            <h3>Race #<%= race.id %></h3>
+
+            <p>Status: <%= race.status %></p>
+
+            <p>Passage: <%= race.passage %></p>
+
+            <%= link_to "Join Race ##{race.id}", race_path(race) %>
+        </div>
+    <% end %>
+<% else %>
+    <p>No races available yet.</p>
+<% end %>
